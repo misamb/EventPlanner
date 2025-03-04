@@ -1,0 +1,46 @@
+@page
+@model WebApp.Pages_PrsnParticipant.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PersonParticipant</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonParticipant.Person)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonParticipant.Person!.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonParticipant.AdditionalInfo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonParticipant.AdditionalInfo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonParticipant.Event)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonParticipant.Event!.EventLocation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonParticipant.ParticipantCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonParticipant.ParticipantCount)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="PersonParticipant.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
