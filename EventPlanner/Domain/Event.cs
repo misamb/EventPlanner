@@ -1,4 +1,5 @@
 ﻿using System;
+using WebApp.Domain;
 
 public class Event : BaseEntity
 {
@@ -8,5 +9,7 @@ public class Event : BaseEntity
 
 	public DateTime EventStartTime { get; set; }
 
-	public ICollection<Participant>? Participants { get; set; }
+	public ICollection<PersonParticipant>? PersonParticipants { get; set; }
+	
+	public ICollection<BusinessParticipant>? BusinessParticipants { get; set; }
 }

@@ -9,5 +9,5 @@ public class BusinessParticipant : Participant
     public int BusinessId { get; set; }
     
     [MaxLength(5000)]
-    public override string? AdditionalInfo { get; set; }
+    public string? AdditionalInfo { get; set; }
 }

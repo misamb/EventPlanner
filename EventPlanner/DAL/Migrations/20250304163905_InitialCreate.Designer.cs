@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250304153902_InitialCreate")]
+    [Migration("20250304163905_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,37 +42,6 @@ namespace DAL.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("Participant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("AdditionalInfo")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ParticipantCount")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("Participant");
-
-                    b.HasDiscriminator().HasValue("Participant");
-
-                    b.UseTphMappingStrategy();
-                });
-
             modelBuilder.Entity("Person", b =>
                 {
                     b.Property<int>("Id")
@@ -91,7 +60,6 @@ namespace DAL.Migrations
 
                     b.Property<string>("PersonalCode")
                         .IsRequired()
-                        .HasMaxLength(11)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -107,6 +75,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("BusinessName")
                         .IsRequired()
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RegistryCode")
@@ -120,37 +89,58 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("WebApp.Domain.BusinessParticipant", b =>
                 {
-                    b.HasBaseType("Participant");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AdditionalInfo")
+                        .HasMaxLength(5000)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("BusinessId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("EventId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ParticipantCount")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("BusinessId");
 
-                    b.HasDiscriminator().HasValue("BusinessParticipant");
+                    b.HasIndex("EventId");
+
+                    b.ToTable("BusinessParticipants");
                 });
 
             modelBuilder.Entity("WebApp.Domain.PersonParticipant", b =>
                 {
-                    b.HasBaseType("Participant");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AdditionalInfo")
+                        .HasMaxLength(1500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ParticipantCount")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("INTEGER");
 
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
                     b.HasIndex("PersonId");
 
-                    b.HasDiscriminator().HasValue("PersonParticipant");
-                });
-
-            modelBuilder.Entity("Participant", b =>
-                {
-                    b.HasOne("Event", "Event")
-                        .WithMany("Participants")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
+                    b.ToTable("PersonParticipants");
                 });
 
             modelBuilder.Entity("WebApp.Domain.BusinessParticipant", b =>
@@ -161,23 +151,41 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Event", "Event")
+                        .WithMany("BusinessParticipants")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Business");
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("WebApp.Domain.PersonParticipant", b =>
                 {
+                    b.HasOne("Event", "Event")
+                        .WithMany("PersonParticipants")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Person", "Person")
                         .WithMany("Participations")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Event");
+
                     b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Event", b =>
                 {
-                    b.Navigation("Participants");
+                    b.Navigation("BusinessParticipants");
+
+                    b.Navigation("PersonParticipants");
                 });
 
             modelBuilder.Entity("Person", b =>

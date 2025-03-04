@@ -17,7 +17,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BusinessName = table.Column<string>(type: "TEXT", nullable: false),
+                    BusinessName = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
                     RegistryCode = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -48,7 +48,7 @@ namespace DAL.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
                     LastName = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
-                    PersonalCode = table.Column<string>(type: "TEXT", maxLength: 11, nullable: false)
+                    PersonalCode = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,35 +56,55 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Participant",
+                name: "BusinessParticipants",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    BusinessId = table.Column<int>(type: "INTEGER", nullable: false),
+                    AdditionalInfo = table.Column<string>(type: "TEXT", maxLength: 5000, nullable: true),
                     EventId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ParticipantCount = table.Column<int>(type: "INTEGER", nullable: false),
-                    AdditionalInfo = table.Column<string>(type: "TEXT", nullable: true),
-                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
-                    BusinessId = table.Column<int>(type: "INTEGER", nullable: true),
-                    PersonId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ParticipantCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participant", x => x.Id);
+                    table.PrimaryKey("PK_BusinessParticipants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Participant_Businesses_BusinessId",
+                        name: "FK_BusinessParticipants_Businesses_BusinessId",
                         column: x => x.BusinessId,
                         principalTable: "Businesses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Participant_Events_EventId",
+                        name: "FK_BusinessParticipants_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonParticipants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PersonId = table.Column<int>(type: "INTEGER", nullable: false),
+                    AdditionalInfo = table.Column<string>(type: "TEXT", maxLength: 1500, nullable: true),
+                    EventId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ParticipantCount = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonParticipants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonParticipants_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Participant_Persons_PersonId",
+                        name: "FK_PersonParticipants_Persons_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "Id",
@@ -92,18 +112,23 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participant_BusinessId",
-                table: "Participant",
+                name: "IX_BusinessParticipants_BusinessId",
+                table: "BusinessParticipants",
                 column: "BusinessId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participant_EventId",
-                table: "Participant",
+                name: "IX_BusinessParticipants_EventId",
+                table: "BusinessParticipants",
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participant_PersonId",
-                table: "Participant",
+                name: "IX_PersonParticipants_EventId",
+                table: "PersonParticipants",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonParticipants_PersonId",
+                table: "PersonParticipants",
                 column: "PersonId");
         }
 
@@ -111,7 +136,10 @@ namespace DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Participant");
+                name: "BusinessParticipants");
+
+            migrationBuilder.DropTable(
+                name: "PersonParticipants");
 
             migrationBuilder.DropTable(
                 name: "Businesses");
