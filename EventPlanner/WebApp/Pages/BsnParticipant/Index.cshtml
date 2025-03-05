@@ -1,5 +1,5 @@
 @page
-@model WebApp.Pages_BisParticipant.IndexModel
+@model WebApp.Pages_BsnParticipant.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -23,6 +23,9 @@
                 @Html.DisplayNameFor(model => model.BusinessParticipant[0].Event)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.BusinessParticipant[0].PaymentType)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BusinessParticipant[0].ParticipantCount)
             </th>
             <th></th>
@@ -39,6 +42,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Event!.EventLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentType!.TypeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ParticipantCount)

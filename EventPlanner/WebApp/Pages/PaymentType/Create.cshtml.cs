@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DAL;
+using WebApp.Domain;
 
-namespace WebApp.Pages_Events
+namespace WebApp.Pages_PaymentType
 {
     public class CreateModel : PageModel
     {
@@ -24,9 +25,7 @@ namespace WebApp.Pages_Events
         }
 
         [BindProperty]
-        public Event Event { get; set; } = default!;
-        
-        public string? ErrorMessage { get; set; }
+        public PaymentType PaymentType { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -36,16 +35,10 @@ namespace WebApp.Pages_Events
                 return Page();
             }
 
-            if (!Validation.IsInFuture(Event.EventStartTime))
-            {
-                ErrorMessage = "Algus aeg peab olema tulevikus!";
-                return Page();
-            }
-
-            _context.Events.Add(Event);
+            _context.PaymentTypes.Add(PaymentType);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("Index");
+            return RedirectToPage("./Index");
         }
     }
 }

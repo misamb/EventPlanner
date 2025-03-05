@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using WebApp.Domain;
 
-namespace WebApp.Pages_BisParticipant
+namespace WebApp.Pages_BsnParticipant
 {
     public class IndexModel : PageModel
     {
@@ -25,7 +25,8 @@ namespace WebApp.Pages_BisParticipant
         {
             BusinessParticipant = await _context.BusinessParticipants
                 .Include(b => b.Business)
-                .Include(b => b.Event).ToListAsync();
+                .Include(b => b.Event)
+                .Include(b => b.PaymentType).ToListAsync();
         }
     }
 }

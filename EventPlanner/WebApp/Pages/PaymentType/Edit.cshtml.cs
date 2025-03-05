@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using WebApp.Domain;
 
-namespace WebApp.Pages_PrsnParticipant
+namespace WebApp.Pages_PaymentType
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace WebApp.Pages_PrsnParticipant
         }
 
         [BindProperty]
-        public PersonParticipant PersonParticipant { get; set; } = default!;
+        public PaymentType PaymentType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,15 +30,12 @@ namespace WebApp.Pages_PrsnParticipant
                 return NotFound();
             }
 
-            var personparticipant =  await _context.PersonParticipants.FirstOrDefaultAsync(m => m.Id == id);
-            if (personparticipant == null)
+            var paymenttype =  await _context.PaymentTypes.FirstOrDefaultAsync(m => m.Id == id);
+            if (paymenttype == null)
             {
                 return NotFound();
             }
-            PersonParticipant = personparticipant;
-           ViewData["EventId"] = new SelectList(_context.Events, "Id", "EventLocation");
-           ViewData["PaymentTypeId"] = new SelectList(_context.PaymentTypes, "Id", "TypeName");
-           ViewData["PersonId"] = new SelectList(_context.Persons, "Id", "FirstName");
+            PaymentType = paymenttype;
             return Page();
         }
 
@@ -51,7 +48,7 @@ namespace WebApp.Pages_PrsnParticipant
                 return Page();
             }
 
-            _context.Attach(PersonParticipant).State = EntityState.Modified;
+            _context.Attach(PaymentType).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +56,7 @@ namespace WebApp.Pages_PrsnParticipant
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonParticipantExists(PersonParticipant.Id))
+                if (!PaymentTypeExists(PaymentType.Id))
                 {
                     return NotFound();
                 }
@@ -72,9 +69,9 @@ namespace WebApp.Pages_PrsnParticipant
             return RedirectToPage("./Index");
         }
 
-        private bool PersonParticipantExists(int id)
+        private bool PaymentTypeExists(int id)
         {
-            return _context.PersonParticipants.Any(e => e.Id == id);
+            return _context.PaymentTypes.Any(e => e.Id == id);
         }
     }
 }

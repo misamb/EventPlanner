@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using WebApp.Domain;
 
-namespace WebApp.Pages_BisParticipant
+namespace WebApp.Pages_BsnParticipant
 {
     public class DetailsModel : PageModel
     {

@@ -1,5 +1,5 @@
 @page
-@model WebApp.Pages_BisParticipant.DetailsModel
+@model WebApp.Pages_BsnParticipant.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -28,6 +28,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BusinessParticipant.Event!.EventLocation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessParticipant.PaymentType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessParticipant.PaymentType!.TypeName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.BusinessParticipant.ParticipantCount)

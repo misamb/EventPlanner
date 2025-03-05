@@ -31,6 +31,12 @@
                 <input asp-for="Event.EventStartTime" class="form-control" />
                 <span asp-validation-for="Event.EventStartTime" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                
+                <label asp-for="Event.AdditionalInfo" class="control-label"></label>
+                <input asp-for="Event.AdditionalInfo" class="form-control" />
+                <span asp-validation-for="Event.AdditionalInfo" class="text-danger"></span>
+            </div>
             <input type="hidden" asp-for="Event.Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

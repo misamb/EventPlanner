@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using WebApp.Domain;
 
-namespace WebApp.Pages_Events
+namespace WebApp.Pages_PaymentType
 {
     public class DetailsModel : PageModel
     {
@@ -18,10 +19,7 @@ namespace WebApp.Pages_Events
             _context = context;
         }
 
-        public Event Event { get; set; } = default!;
-        
-        [BindProperty]
-        public Person Person { get; set; } = default!;
+        public PaymentType PaymentType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,11 +28,11 @@ namespace WebApp.Pages_Events
                 return NotFound();
             }
 
-            var e = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
+            var paymenttype = await _context.PaymentTypes.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (e is not null)
+            if (paymenttype is not null)
             {
-                Event = e;
+                PaymentType = paymenttype;
 
                 return Page();
             }

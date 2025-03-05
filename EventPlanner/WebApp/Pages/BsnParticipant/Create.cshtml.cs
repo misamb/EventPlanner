@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using DAL;
 using WebApp.Domain;
 
-namespace WebApp.Pages_BisParticipant
+namespace WebApp.Pages_BsnParticipant
 {
     public class CreateModel : PageModel
     {
@@ -19,28 +19,59 @@ namespace WebApp.Pages_BisParticipant
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public Event? Event { get; set; }
+        
+        public SelectList? PaymentTypeSelectList { get; set; }
+        
+        public SelectList? BusinessSelectList { get; set; }
+        
+        public async Task<IActionResult> OnGet(int eventId)
         {
-        ViewData["BusinessId"] = new SelectList(_context.Businesses, "Id", "BusinessName");
-        ViewData["EventId"] = new SelectList(_context.Events, "Id", "EventLocation");
+            Event = await _context.GetEventById(eventId);
+
+            PaymentTypeSelectList = new SelectList(_context.PaymentTypes, nameof(PaymentType.Id),
+                nameof(PaymentType.TypeName));
+            
+            BusinessSelectList = new SelectList(_context.Businesses, nameof(Business.Id),
+                nameof(Business.BusinessName));
+
             return Page();
         }
 
         [BindProperty]
         public BusinessParticipant BusinessParticipant { get; set; } = default!;
-
+        
+        [BindProperty]
+        public Business Business { get; set; } = default!;
+        
+        [BindProperty]
+        public bool IsNewBusiness {get; set;}
+        
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!IsNewBusiness)
+            {
+                ModelState.Remove("Business.BusinessName");
+                ModelState.Remove("Business.RegistryCode");
+            }
+            
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+            
+            if (IsNewBusiness)
+            {
+                _context.Businesses.Add(Business);
+                await _context.SaveChangesAsync();
+                BusinessParticipant.BusinessId = Business.Id;
             }
 
             _context.BusinessParticipants.Add(BusinessParticipant);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }

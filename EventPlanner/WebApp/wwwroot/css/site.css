@@ -19,6 +19,7 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: lightsteelblue;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -28,4 +29,12 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+.custom-navbar {
+  width: 70%; /* Määrab laiuse, saad muuta vastavalt soovile */
+  margin: 20px auto; /* Keskele paigutamine */
+  padding: 15px; /* Ruumi lisamine ümber sisu */
+  background-color: #f8f9fa; /* Kerge hallikas taust */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Kerge vari */
 }

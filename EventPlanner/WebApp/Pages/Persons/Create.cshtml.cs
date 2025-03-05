@@ -24,7 +24,7 @@ namespace WebApp.Pages_Persons
         }
 
         [BindProperty]
-        public Person Person { get; set; } = default!;
+        public Person Person {get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()

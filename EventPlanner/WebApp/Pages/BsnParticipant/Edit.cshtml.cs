@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using WebApp.Domain;
 
-namespace WebApp.Pages_BisParticipant
+namespace WebApp.Pages_BsnParticipant
 {
     public class EditModel : PageModel
     {
@@ -38,6 +38,7 @@ namespace WebApp.Pages_BisParticipant
             BusinessParticipant = businessparticipant;
            ViewData["BusinessId"] = new SelectList(_context.Businesses, "Id", "BusinessName");
            ViewData["EventId"] = new SelectList(_context.Events, "Id", "EventLocation");
+           ViewData["PaymentTypeId"] = new SelectList(_context.PaymentTypes, "Id", "TypeName");
             return Page();
         }
 

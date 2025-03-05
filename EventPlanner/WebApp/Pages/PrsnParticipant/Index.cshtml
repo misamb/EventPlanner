@@ -23,6 +23,9 @@
                 @Html.DisplayNameFor(model => model.PersonParticipant[0].Event)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.PersonParticipant[0].PaymentType)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PersonParticipant[0].ParticipantCount)
             </th>
             <th></th>
@@ -39,6 +42,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Event!.EventLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentType!.TypeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ParticipantCount)

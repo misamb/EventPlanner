@@ -4,8 +4,8 @@
         @{
         ViewData["Title"] = "Create";
         }
-        
-        <h1>Create</h1>
+
+<h1 xmlns="http://www.w3.org/1999/html">Create</h1>
         
     <h4>Event</h4>
     <hr />
@@ -27,6 +27,11 @@
                 <label asp-for="Event.EventStartTime" class="control-label"></label>
                 <input asp-for="Event.EventStartTime" class="form-control" />
                 <span asp-validation-for="Event.EventStartTime" class="text-danger"></span>
+                <span class="text-danger">@Model.ErrorMessage</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.AdditionalInfo" class="control-label"></label>
+                <textarea asp-for="Event.AdditionalInfo" class="form-control"></textarea>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -36,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="../Index">Tagasi Avalehele</a>
 </div>
 
 @section Scripts {

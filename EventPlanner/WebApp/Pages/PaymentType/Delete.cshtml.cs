@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using WebApp.Domain;
 
-namespace WebApp.Pages_BsnParticipant
+namespace WebApp.Pages_PaymentType
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace WebApp.Pages_BsnParticipant
         }
 
         [BindProperty]
-        public BusinessParticipant BusinessParticipant { get; set; } = default!;
+        public PaymentType PaymentType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,11 +29,11 @@ namespace WebApp.Pages_BsnParticipant
                 return NotFound();
             }
 
-            var businessparticipant = await _context.BusinessParticipants.FirstOrDefaultAsync(m => m.Id == id);
+            var paymenttype = await _context.PaymentTypes.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (businessparticipant is not null)
+            if (paymenttype is not null)
             {
-                BusinessParticipant = businessparticipant;
+                PaymentType = paymenttype;
 
                 return Page();
             }
@@ -48,11 +48,11 @@ namespace WebApp.Pages_BsnParticipant
                 return NotFound();
             }
 
-            var businessparticipant = await _context.BusinessParticipants.FindAsync(id);
-            if (businessparticipant != null)
+            var paymenttype = await _context.PaymentTypes.FindAsync(id);
+            if (paymenttype != null)
             {
-                BusinessParticipant = businessparticipant;
-                _context.BusinessParticipants.Remove(BusinessParticipant);
+                PaymentType = paymenttype;
+                _context.PaymentTypes.Remove(PaymentType);
                 await _context.SaveChangesAsync();
             }
 
