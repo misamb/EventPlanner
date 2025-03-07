@@ -21,24 +21,37 @@ namespace WebApp.Pages_PrsnParticipant
         }
 
         [BindProperty]
-        public PersonParticipant PersonParticipant { get; set; } = default!;
+        public PersonParticipant? PersonParticipant { get; set; }
+        
+        [BindProperty]
+        public Person? Person { get; set; }
+        
+        public SelectList PaymentTypeSelectList { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? personParticipantId)
         {
-            if (id == null)
+            if (personParticipantId == null)
             {
                 return NotFound();
             }
 
-            var personparticipant =  await _context.PersonParticipants.FirstOrDefaultAsync(m => m.Id == id);
-            if (personparticipant == null)
+            PersonParticipant =  await _context.PersonParticipants.FirstOrDefaultAsync(pp => pp.Id == personParticipantId);
+            
+            if (PersonParticipant == null)
             {
                 return NotFound();
             }
-            PersonParticipant = personparticipant;
-           ViewData["EventId"] = new SelectList(_context.Events, "Id", "EventLocation");
-           ViewData["PaymentTypeId"] = new SelectList(_context.PaymentTypes, "Id", "TypeName");
-           ViewData["PersonId"] = new SelectList(_context.Persons, "Id", "FirstName");
+            
+            Person = await _context.Persons.FirstOrDefaultAsync(p => p.Id == PersonParticipant.PersonId);
+            
+            if (Person == null)
+            {
+                return NotFound();
+            }
+            
+            PaymentTypeSelectList = new SelectList(_context.PaymentTypes, nameof(PaymentType.Id),
+                nameof(PaymentType.TypeName));
+            
             return Page();
         }
 
@@ -51,15 +64,29 @@ namespace WebApp.Pages_PrsnParticipant
                 return Page();
             }
 
-            _context.Attach(PersonParticipant).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.EditPersonParticipant(PersonParticipant!);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonParticipantExists(PersonParticipant.Id))
+                if (!PersonParticipantExists(PersonParticipant!.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            
+            try
+            {
+                await _context.EditPerson(Person!);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PersonExists(Person!.Id))
                 {
                     return NotFound();
                 }
@@ -69,12 +96,16 @@ namespace WebApp.Pages_PrsnParticipant
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
 
         private bool PersonParticipantExists(int id)
         {
             return _context.PersonParticipants.Any(e => e.Id == id);
+        }
+        private bool PersonExists(int id)
+        {
+            return _context.Persons.Any(e => e.Id == id);
         }
     }
 }

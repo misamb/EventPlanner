@@ -32,7 +32,7 @@ namespace WebApp.Pages_PrsnParticipant
             PaymentTypeSelectList = new SelectList(_context.PaymentTypes, nameof(PaymentType.Id),
                 nameof(PaymentType.TypeName));
             
-            PersonSelectList = new SelectList(_context.Persons, nameof(Person.Id),
+            PersonSelectList = new SelectList(await _context.GetPersonsNotAtEventById(eventId), nameof(Person.Id),
                 nameof(Person.FirstName));
 
             return Page();
@@ -46,12 +46,12 @@ namespace WebApp.Pages_PrsnParticipant
         public Person Person { get; set; } = default!;
         
         [BindProperty]
-        public bool IsNewPerson { get; set; }
+        public bool IsSavedPerson { get; set; }
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!IsNewPerson)
+            if (IsSavedPerson)
             {
                 ModelState.Remove("Person.FirstName");
                 ModelState.Remove("Person.LastName");
@@ -63,7 +63,7 @@ namespace WebApp.Pages_PrsnParticipant
                 return Page();
             }
 
-            if (IsNewPerson)
+            if (!IsSavedPerson)
             {
                 _context.Persons.Add(Person);
                 await _context.SaveChangesAsync();

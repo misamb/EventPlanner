@@ -2,51 +2,51 @@
 @model WebApp.Pages_PrsnParticipant.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Osaleja";
 }
 
-<h1>Delete</h1>
+<div class="container mt-2">
+    <div class="row bg-primary">
+        <div class="col-3 text-center text-white">
+            <h3>Osaleja</h3>
+        </div>
+    </div>
+    <div class="row bg-white text-black p-3">
+        <div class="col-3 position-relative">
+            <div>
+                <a class="position-absolute bottom-0 btn btn-secondary" role="button" asp-page="../Index">Tagasi Avalehele</a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-primary">
+                <h4>Eemalda osaleja ürituselt</h4>
+            </div>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Ürituse nimi:
+                </dt>
+                <dt class="col-sm-10">
+                    @Html.DisplayFor(model => model.PersonParticipant.Event!.EventName)
+                </dt>
+                <dt class="col-sm-2">
+                    Eraisiku nimi:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PersonParticipant.Person!.FirstName)
+                    @Html.DisplayFor(model => model.PersonParticipant.Person!.LastName)
+                </dd>
+                <dt class="col-sm-2">
+                    Lisainfo:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PersonParticipant.AdditionalInfo)
+                </dd>
+            </dl>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>PersonParticipant</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PersonParticipant.Person)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PersonParticipant.Person!.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PersonParticipant.AdditionalInfo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PersonParticipant.AdditionalInfo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PersonParticipant.Event)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PersonParticipant.Event!.EventLocation)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PersonParticipant.PaymentType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PersonParticipant.PaymentType!.TypeName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PersonParticipant.ParticipantCount)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PersonParticipant.ParticipantCount)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="PersonParticipant.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+            <form method="post">
+                <input type="hidden" asp-for="PersonParticipant.Id"/>
+                <input type="submit" value="Eemalda" class="btn btn-danger"/>
+            </form>
+        </div>
+    </div>
 </div>

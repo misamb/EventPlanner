@@ -13,10 +13,10 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-check form-switch">
-                <input class="form-check-input" asp-for="IsNewBusiness" type="checkbox" role="switch" id="FormSwitch" onchange="switchForm()">
-                <label class="form-check-label" for="FormSwitch">Lisa uus ettevõte</label>
+                <input class="form-check-input" asp-for="IsSavedBusiness" type="checkbox" role="switch" id="FormSwitch" onchange="switchForm()">
+                <label class="form-check-label" for="FormSwitch">Lisa salvestatud ettevõte</label>
             </div>
-            <div id="AddNewBusiness" style="display: none;">
+            <div id="AddNewBusiness" style="display: block;">
                 <div class="form-group">
                     <label asp-for="Business.BusinessName" class="control-label"></label>
                     <input asp-for="Business.BusinessName" class="form-control" />
@@ -28,7 +28,7 @@
                     <span asp-validation-for="Business.RegistryCode" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group" id="AddSavedBusiness" style="display: block;">
+            <div class="form-group" id="AddSavedBusiness" style="display: none;">
                 <label asp-for="BusinessParticipant.BusinessId" class="control-label"></label>
                 <select asp-for="BusinessParticipant.BusinessId" class="form-control" asp-items="Model.BusinessSelectList"></select>
             </div>
@@ -55,13 +55,13 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="../Index">Tagasi Avalehele</a>
 </div>
 <script>
     function switchForm() {
         let isChecked = document.getElementById("FormSwitch").checked
-        document.getElementById("AddSavedBusiness").style.display = isChecked ? "none" : "block";
-        document.getElementById("AddNewBusiness").style.display = isChecked ? "block" : "none";
+        document.getElementById("AddSavedBusiness").style.display = isChecked ? "block" : "none";
+        document.getElementById("AddNewBusiness").style.display = isChecked ? "none" : "block";
     }
 </script>
 

@@ -2,59 +2,67 @@
 @model WebApp.Pages_PrsnParticipant.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Osaleja info";
 }
-
-<h1>Edit</h1>
-
-<h4>PersonParticipant</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                
-                <label asp-for="PersonParticipant.PersonId" class="control-label"></label>
-                <select asp-for="PersonParticipant.PersonId" class="form-control" asp-items="ViewBag.PersonId"></select>
-                <span asp-validation-for="PersonParticipant.PersonId" class="text-danger"></span>
+<div class="container mt-2">
+    <div class="row bg-primary">
+        <div class="col-3 text-center text-white">
+            <h3>Osavõtja</h3>
+        </div>
+    </div>
+    <div class="row bg-white text-black p-3">
+        <div class="col-3 position-relative">
+            <div>
+                <a class="position-absolute bottom-0 btn btn-secondary" role="button" asp-page="../Index">Tagasi Avalehele</a>
             </div>
-            <div class="form-group">
-                
-                <label asp-for="PersonParticipant.AdditionalInfo" class="control-label"></label>
-                <input asp-for="PersonParticipant.AdditionalInfo" class="form-control" />
-                <span asp-validation-for="PersonParticipant.AdditionalInfo" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <div class="text-primary">
+                <h4>Eraisik</h4>
             </div>
-            <div class="form-group">
-                
-                <label asp-for="PersonParticipant.EventId" class="control-label"></label>
-                <select asp-for="PersonParticipant.EventId" class="form-control" asp-items="ViewBag.EventId"></select>
-                <span asp-validation-for="PersonParticipant.EventId" class="text-danger"></span>
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Person!.FirstName" class="control-label"></label>
+                        <input asp-for="Person!.FirstName" class="form-control"/>
+                        <span asp-validation-for="Person!.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Person!.LastName" class="control-label"></label>
+                        <input asp-for="Person!.LastName" class="form-control"/>
+                        <span asp-validation-for="Person!.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Person!.PersonalCode" class="control-label"></label>
+                        <input asp-for="Person!.PersonalCode" class="form-control"/>
+                        <span asp-validation-for="Person!.PersonalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PersonParticipant!.PaymentTypeId" class="control-label"></label>
+                        <select asp-for="PersonParticipant!.PaymentTypeId" class="form-control" asp-items="@Model.PaymentTypeSelectList"></select>
+                        <span asp-validation-for="PersonParticipant!.PaymentTypeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PersonParticipant!.AdditionalInfo" class="control-label"></label>
+                        <input asp-for="PersonParticipant!.AdditionalInfo" class="form-control"/>
+                        <span asp-validation-for="PersonParticipant!.AdditionalInfo" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="PersonParticipant!.Id"/>
+                    <input type="hidden" asp-for="PersonParticipant!.EventId"/>
+                    <input type="hidden" asp-for="PersonParticipant!.PersonId"/>
+                    <input type="hidden" asp-for="PersonParticipant!.ParticipantCount"/>
+                    <input type="hidden" asp-for="Person!.Id"/>
+                    <div class="form-group pt-1">
+                        <input type="submit" value="Salvesta" class="btn btn-primary"/>
+                        <a class="btn btn-danger" asp-page="/Persons/Delete" asp-route-id="@Model.Person!.Id" role="button">Kustuta eraisik</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                
-                <label asp-for="PersonParticipant.PaymentTypeId" class="control-label"></label>
-                <select asp-for="PersonParticipant.PaymentTypeId" class="form-control" asp-items="ViewBag.PaymentTypeId"></select>
-                <span asp-validation-for="PersonParticipant.PaymentTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                
-                <label asp-for="PersonParticipant.ParticipantCount" class="control-label"></label>
-                <input asp-for="PersonParticipant.ParticipantCount" class="form-control" />
-                <span asp-validation-for="PersonParticipant.ParticipantCount" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="PersonParticipant.Id" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

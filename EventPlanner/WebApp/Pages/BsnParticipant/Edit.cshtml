@@ -2,59 +2,69 @@
 @model WebApp.Pages_BsnParticipant.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Osaleja info";
 }
-
-<h1>Edit</h1>
-
-<h4>BusinessParticipant</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                
-                <label asp-for="BusinessParticipant.BusinessId" class="control-label"></label>
-                <select asp-for="BusinessParticipant.BusinessId" class="form-control" asp-items="ViewBag.BusinessId"></select>
-                <span asp-validation-for="BusinessParticipant.BusinessId" class="text-danger"></span>
+<div class="container mt-2">
+    <div class="row bg-primary">
+        <div class="col-3 text-center text-white">
+            <h3>Osavõtja</h3>
+        </div>
+    </div>
+    <div class="row bg-white text-black p-3">
+        <div class="col-3 position-relative">
+            <div>
+                <a class="position-absolute bottom-0 btn btn-secondary" role="button" asp-page="../Index">Tagasi Avalehele</a>
             </div>
-            <div class="form-group">
-                
-                <label asp-for="BusinessParticipant.AdditionalInfo" class="control-label"></label>
-                <input asp-for="BusinessParticipant.AdditionalInfo" class="form-control" />
-                <span asp-validation-for="BusinessParticipant.AdditionalInfo" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <div class="text-primary">
+                <h4>Ettevõte</h4>
             </div>
-            <div class="form-group">
-                
-                <label asp-for="BusinessParticipant.EventId" class="control-label"></label>
-                <select asp-for="BusinessParticipant.EventId" class="form-control" asp-items="ViewBag.EventId"></select>
-                <span asp-validation-for="BusinessParticipant.EventId" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Business!.BusinessName" class="control-label"></label>
+                            <input asp-for="Business!.BusinessName" class="form-control"/>
+                            <span asp-validation-for="Business!.BusinessName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Business!.RegistryCode" class="control-label"></label>
+                            <input asp-for="Business!.RegistryCode" class="form-control"/>
+                            <span asp-validation-for="Business!.RegistryCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BusinessParticipant!.ParticipantCount" class="control-label"></label>
+                            <input asp-for="BusinessParticipant!.ParticipantCount" class="form-control"/>
+                            <span asp-validation-for="BusinessParticipant!.ParticipantCount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BusinessParticipant!.PaymentTypeId" class="control-label"></label>
+                            <select asp-for="BusinessParticipant!.PaymentTypeId" class="form-control" asp-items="@Model.PaymentTypeSelectList"></select>
+                            <span asp-validation-for="BusinessParticipant!.PaymentTypeId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BusinessParticipant!.AdditionalInfo" class="control-label"></label>
+                            <input asp-for="BusinessParticipant!.AdditionalInfo" class="form-control"/>
+                            <span asp-validation-for="BusinessParticipant!.AdditionalInfo" class="text-danger"></span>
+                        </div>
+                        <input type="hidden" asp-for="Business!.Id"/>
+                        <input type="hidden" asp-for="BusinessParticipant!.Id"/>
+                        <input type="hidden" asp-for="BusinessParticipant!.BusinessId"/>
+                        <input type="hidden" asp-for="BusinessParticipant!.EventId"/>
+                        <div class="form-group pt-1">
+                            <input type="submit" value="Salvesta" class="btn btn-primary"/>
+                            <a class="btn btn-danger" asp-page="/Business/Delete" asp-route-id="@Model.Business!.Id" role="button">Kustuta ettevõte</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                
-                <label asp-for="BusinessParticipant.PaymentTypeId" class="control-label"></label>
-                <select asp-for="BusinessParticipant.PaymentTypeId" class="form-control" asp-items="ViewBag.PaymentTypeId"></select>
-                <span asp-validation-for="BusinessParticipant.PaymentTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                
-                <label asp-for="BusinessParticipant.ParticipantCount" class="control-label"></label>
-                <input asp-for="BusinessParticipant.ParticipantCount" class="form-control" />
-                <span asp-validation-for="BusinessParticipant.ParticipantCount" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="BusinessParticipant.Id" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

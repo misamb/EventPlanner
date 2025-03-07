@@ -2,33 +2,41 @@
 @model WebApp.Pages_Business.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Ettevõte";
 }
 
-<h1>Delete</h1>
+<div class="container mt-2">
+    <div class="row bg-primary">
+        <div class="col-3 text-center text-white">
+            <h3>Kustuta Ettevõte</h3>
+        </div>
+    </div>
+    <div class="row bg-white text-black p-3">
+        <div class="col-3 position-relative">
+            <div>
+                <a class="position-absolute bottom-0 btn btn-secondary" role="button" asp-page="../Index">Tagasi Avalehele</a>
+            </div>
+        </div>
+        <div class="col">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Ettevõte nimi:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Business.BusinessName)
+                </dd>
+                <dt class="col-sm-2">
+                    Registrikood:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Business.RegistryCode)
+                </dd>
+            </dl>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Business</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Business.BusinessName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Business.BusinessName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Business.RegistryCode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Business.RegistryCode)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="Business.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+            <form method="post">
+                <input type="hidden" asp-for="Business.Id"/>
+                <input type="submit" value="Kustuta" class="btn btn-danger"/>
+            </form>
+        </div>
+    </div>
 </div>

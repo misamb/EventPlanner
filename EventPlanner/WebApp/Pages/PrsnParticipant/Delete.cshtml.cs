@@ -29,11 +29,10 @@ namespace WebApp.Pages_PrsnParticipant
                 return NotFound();
             }
 
-            var personparticipant = await _context.PersonParticipants.FirstOrDefaultAsync(m => m.Id == id);
+            PersonParticipant = await _context.GetPersonParticipantWithPersonAndEventById(id.Value);
 
-            if (personparticipant is not null)
+            if (PersonParticipant is not null)
             {
-                PersonParticipant = personparticipant;
 
                 return Page();
             }
@@ -56,7 +55,7 @@ namespace WebApp.Pages_PrsnParticipant
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }

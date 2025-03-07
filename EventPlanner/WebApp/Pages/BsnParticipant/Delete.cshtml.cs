@@ -29,12 +29,11 @@ namespace WebApp.Pages_BsnParticipant
                 return NotFound();
             }
 
-            var businessparticipant = await _context.BusinessParticipants.FirstOrDefaultAsync(m => m.Id == id);
+            BusinessParticipant = await _context.GetBusinessParticipantWithBusinessAndEventById(id.Value);
 
-            if (businessparticipant is not null)
+            if (BusinessParticipant is not null)
             {
-                BusinessParticipant = businessparticipant;
-
+                
                 return Page();
             }
 

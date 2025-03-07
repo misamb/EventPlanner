@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Avaleht";
 }
-
+<a href="https://example.com" title="Click to visit Example!">Hover over me</a>
 <div class="text-center">
     <a asp-page="/Events/Index">Events</a>
     <a asp-page="/Persons/Index">Persons</a>
@@ -13,11 +13,27 @@
     <a asp-page="/PaymentType/Index">PaymentType</a>
 </div>
 
-<div class="container px-4 text-center">
-    <div class="row bg-gradient text-white gx-5">
-        <div class="col p-3">
-            <div class="p-3">Tulevased üritused</div>
-            <div class="table">
+<div class="container">
+    <div class="row text-white">
+        <div class="col p-3 me-3 bg-primary text-center" >
+            <div>Tulevased üritused</div>
+        </div>
+        <div class="col p-3 bg-primary text-center">
+            <div>Toimunud üritused</div>
+        </div>
+    </div>
+    <div class="row text-black">
+        <div class="col p-3 me-3 bg-white" >
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Nimi</th>
+                    <th scope="col">Aeg</th>
+                    <th scope="col">Osaleja</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
                 <tbody>
                 @foreach (var item in Model.FutureEvents)
                 {
@@ -25,7 +41,9 @@
                         <td>
                             <a asp-page="/Events/Details" asp-route-id="@item.Id">@item.EventName</a>
                         </td>
-                        <td>@item.EventStartTime</td>
+                        <td>
+                            @item.EventStartTime
+                        </td>
                         <td>
                             <a>Osalejad</a>
                         </td>
@@ -37,36 +55,35 @@
                                 <li><a class="dropdown-item" asp-page="/PrsnParticipant/Create" asp-route-eventId="@item.Id">Eraisik</a></li>
                                 <li><a class="dropdown-item" asp-page="/BsnParticipant/Create" asp-route-eventId="@item.Id">Ettevõte</a></li>
                             </ul>
-                            
+
                         </td>
                         <td>
-                            <a asp-page="Event/Delete" asp-route-id="@item.Id">
+                            <a asp-page="/Events/Delete" title="Kustuta üritus" asp-route-id="@item.Id">
                                 <img src="elements/remove.svg" alt="Kustuta" class="img-fluid">
                             </a>
                         </td>
                     </tr>
                 }
                 </tbody>
-            </div>
+            </table>
         </div>
-        <div class="col p-3">
-            <div class="p-3">Toimunud üritused</div>
-            <div class="table">
+        <div class="col p-3 bg-white">
+            <table class="table">
                 <tbody>
                 @foreach (var item in Model.PastEvents)
                 {
-                    <tr>
-                        <td>
-                            <a asp-page="/Events/Details" asp-route-id="@item.Id">@item.EventName</a>
-                        </td>
-                        <td>@item.EventStartTime</td>
-                        <td>
-                            <a asp-page="/Events/Details" asp-route-id="@item.Id">Osalejad</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <a asp-page="/Events/Details" asp-route-id="@item.Id">@item.EventName</a>
+                    </td>
+                    <td>@item.EventStartTime</td>
+                    <td>
+                        <a asp-page="/Events/Details" asp-route-id="@item.Id">Osalejad</a>
+                    </td>
+                </tr>
                 }
                 </tbody>
-            </div>
+            </table>
         </div>
     </div>
 </div>

@@ -19,26 +19,39 @@ namespace WebApp.Pages_BsnParticipant
         {
             _context = context;
         }
+        
+        public SelectList PaymentTypeSelectList { get; set; } = default!;
 
         [BindProperty]
-        public BusinessParticipant BusinessParticipant { get; set; } = default!;
+        public BusinessParticipant? BusinessParticipant { get; set; }
+        
+        [BindProperty]
+        public Business? Business { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? businessParticipantId)
         {
-            if (id == null)
+            if (businessParticipantId == null)
             {
                 return NotFound();
             }
 
-            var businessparticipant =  await _context.BusinessParticipants.FirstOrDefaultAsync(m => m.Id == id);
-            if (businessparticipant == null)
+            BusinessParticipant =  await _context.BusinessParticipants.FirstOrDefaultAsync(m => m.Id == businessParticipantId);
+            
+            if (BusinessParticipant == null)
             {
                 return NotFound();
             }
-            BusinessParticipant = businessparticipant;
-           ViewData["BusinessId"] = new SelectList(_context.Businesses, "Id", "BusinessName");
-           ViewData["EventId"] = new SelectList(_context.Events, "Id", "EventLocation");
-           ViewData["PaymentTypeId"] = new SelectList(_context.PaymentTypes, "Id", "TypeName");
+            
+            Business = _context.Businesses.FirstOrDefault(m => m.Id == BusinessParticipant.BusinessId);
+            
+            if (Business == null)
+            {
+                return NotFound();
+            }
+            
+            PaymentTypeSelectList = new SelectList(_context.PaymentTypes, nameof(PaymentType.Id),
+                nameof(PaymentType.TypeName));
+            
             return Page();
         }
 
@@ -51,15 +64,29 @@ namespace WebApp.Pages_BsnParticipant
                 return Page();
             }
 
-            _context.Attach(BusinessParticipant).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.EditBusinessParticipant(BusinessParticipant);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BusinessParticipantExists(BusinessParticipant.Id))
+                if (!BusinessParticipantExists(BusinessParticipant!.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            
+            try
+            {
+                await _context.EditBusiness(Business);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BusinessExists(Business!.Id))
                 {
                     return NotFound();
                 }
@@ -75,6 +102,11 @@ namespace WebApp.Pages_BsnParticipant
         private bool BusinessParticipantExists(int id)
         {
             return _context.BusinessParticipants.Any(e => e.Id == id);
+        }
+        
+        private bool BusinessExists(int id)
+        {
+            return _context.Businesses.Any(e => e.Id == id);
         }
     }
 }

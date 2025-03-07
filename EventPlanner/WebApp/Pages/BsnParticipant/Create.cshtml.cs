@@ -45,12 +45,12 @@ namespace WebApp.Pages_BsnParticipant
         public Business Business { get; set; } = default!;
         
         [BindProperty]
-        public bool IsNewBusiness {get; set;}
+        public bool IsSavedBusiness {get; set;}
         
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!IsNewBusiness)
+            if (IsSavedBusiness)
             {
                 ModelState.Remove("Business.BusinessName");
                 ModelState.Remove("Business.RegistryCode");
@@ -61,7 +61,7 @@ namespace WebApp.Pages_BsnParticipant
                 return Page();
             }
             
-            if (IsNewBusiness)
+            if (!IsSavedBusiness)
             {
                 _context.Businesses.Add(Business);
                 await _context.SaveChangesAsync();

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using WebApp.Domain;
 
 namespace WebApp.Pages_Events
 {
@@ -20,9 +21,6 @@ namespace WebApp.Pages_Events
 
         public Event Event { get; set; } = default!;
         
-        [BindProperty]
-        public Person Person { get; set; } = default!;
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -30,8 +28,8 @@ namespace WebApp.Pages_Events
                 return NotFound();
             }
 
-            var e = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
-
+            var e = await _context.GetEventWithAllParticipantsById(id.Value);
+            
             if (e is not null)
             {
                 Event = e;
