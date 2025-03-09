@@ -60,7 +60,7 @@ namespace WebApp.Pages_BsnParticipant
 
             await _context.DeleteBusinessParticipant(id.Value);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }

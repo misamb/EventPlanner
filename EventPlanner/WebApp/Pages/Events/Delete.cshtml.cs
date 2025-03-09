@@ -49,7 +49,7 @@ namespace WebApp.Pages_Events
 
             await _context.DeleteEvent(id.Value);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }

@@ -50,7 +50,7 @@ namespace WebApp.Pages_Business
 
             await _context.DeleteBusiness(id.Value);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }

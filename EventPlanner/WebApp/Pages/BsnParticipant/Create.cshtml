@@ -2,61 +2,75 @@
 @model WebApp.Pages_BsnParticipant.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Osaleja lisamine";
 }
 
-<h1>Lisa osaleja üritusele '@Model.Event!.EventName'</h1>
-<h4>Ettevõte</h4>
-<hr/>
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-check form-switch">
-                <input class="form-check-input" asp-for="IsSavedBusiness" type="checkbox" role="switch" id="FormSwitch" onchange="switchForm()">
-                <label class="form-check-label" for="FormSwitch">Lisa salvestatud ettevõte</label>
+<div class="container mt-2">
+    <div class="row bg-primary">
+        <div class="col-3 text-center text-white">
+            <h3>Osaleja</h3>
+        </div>
+    </div>
+    <div class="row bg-white text-black p-3">
+        <div class="col-3 position-relative">
+            <div>
+                <a class="position-absolute bottom-0 btn btn-secondary" role="button" asp-page="../Index">Tagasi Avalehele</a>
             </div>
-            <div id="AddNewBusiness" style="display: block;">
-                <div class="form-group">
-                    <label asp-for="Business.BusinessName" class="control-label"></label>
-                    <input asp-for="Business.BusinessName" class="form-control" />
-                    <span asp-validation-for="Business.BusinessName" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <div class="text-primary">
+                <h4>Üritus '@Model.Event!.EventName'</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" asp-for="IsSavedBusiness" type="checkbox" role="switch" id="FormSwitch" onchange="switchForm()">
+                            <label class="form-check-label" for="FormSwitch">Lisa salvestatud ettevõte</label>
+                        </div>
+                        <div id="AddNewBusiness" style="display: block;">
+                            <div class="form-group">
+                                Ettevõtte nimi
+                                <input asp-for="Business.BusinessName" class="form-control" data-val-required="Ettevõtte nimi on kohustuslik"/>
+                                <span asp-validation-for="Business.BusinessName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                Registrikood
+                                <input asp-for="Business.RegistryCode" class="form-control" data-val-required="Registrikood on kohustuslik"/>
+                                <span asp-validation-for="Business.RegistryCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" id="AddSavedBusiness" style="display: none;">
+                            Salvestatud ettevõtted
+                            <select asp-for="BusinessParticipant.BusinessId" class="form-control" asp-items="Model.BusinessSelectList"></select>
+                        </div>
+                        <div class="form-group">
+                            Osalejate arv
+                            <input asp-for="BusinessParticipant.ParticipantCount" class="form-control" data-val-required="Osalejate arv on kohustuslik"/>
+                            <span asp-validation-for="BusinessParticipant.ParticipantCount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            Makseviis
+                            <select asp-for="BusinessParticipant.PaymentTypeId" class="form-control" asp-items="Model.PaymentTypeSelectList"></select>
+                        </div>
+                        <div class="form-group">
+                            Lisainfo
+                            <textarea asp-for="BusinessParticipant.AdditionalInfo" class="form-control"></textarea>
+                            <span asp-validation-for="BusinessParticipant.AdditionalInfo" class="text-danger"></span>
+                        </div>
+                        <input type="hidden" asp-for="BusinessParticipant.EventId" value="@Model.Event!.Id"/>
+                        <div class="form-group pt-1">
+                            <input type="submit" value="Lisa" class="btn btn-primary"/>
+                            <a class="btn btn-secondary" asp-page="/PrsnParticipant/Create" asp-route-eventId="@Model.Event.Id">Lisa eraisik</a>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Business.RegistryCode" class="control-label"></label>
-                    <input asp-for="Business.RegistryCode" class="form-control" />
-                    <span asp-validation-for="Business.RegistryCode" class="text-danger"></span>
-                </div>
             </div>
-            <div class="form-group" id="AddSavedBusiness" style="display: none;">
-                <label asp-for="BusinessParticipant.BusinessId" class="control-label"></label>
-                <select asp-for="BusinessParticipant.BusinessId" class="form-control" asp-items="Model.BusinessSelectList"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="BusinessParticipant.ParticipantCount" class="control-label"></label>
-                <input asp-for="BusinessParticipant.ParticipantCount" class="form-control"/>
-                <span asp-validation-for="BusinessParticipant.ParticipantCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BusinessParticipant.PaymentTypeId" class="control-label"></label>
-                <select asp-for="BusinessParticipant.PaymentTypeId" class="form-control" asp-items="Model.PaymentTypeSelectList"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="BusinessParticipant.AdditionalInfo" class="control-label"></label>
-                <input asp-for="BusinessParticipant.AdditionalInfo" class="form-control"/>
-                <span asp-validation-for="BusinessParticipant.AdditionalInfo" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="BusinessParticipant.EventId" value="@Model.Event!.Id"/>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="../Index">Tagasi Avalehele</a>
-</div>
 <script>
     function switchForm() {
         let isChecked = document.getElementById("FormSwitch").checked

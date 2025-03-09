@@ -24,27 +24,27 @@
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="Person!.FirstName" class="control-label"></label>
-                        <input asp-for="Person!.FirstName" class="form-control"/>
+                        Eesnimi
+                        <input asp-for="Person!.FirstName" class="form-control" data-val-required="Eesnimi on kohustuslik"/>
                         <span asp-validation-for="Person!.FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Person!.LastName" class="control-label"></label>
-                        <input asp-for="Person!.LastName" class="form-control"/>
+                        Perekonnanimi
+                        <input asp-for="Person!.LastName" class="form-control" data-val-required="Perekonnanimi on kohustuslik"/>
                         <span asp-validation-for="Person!.LastName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Person!.PersonalCode" class="control-label"></label>
-                        <input asp-for="Person!.PersonalCode" class="form-control"/>
+                        Isikukood
+                        <input asp-for="Person!.PersonalCode" class="form-control" data-val-required="Isikukood on kohustuslik"/>
                         <span asp-validation-for="Person!.PersonalCode" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="PersonParticipant!.PaymentTypeId" class="control-label"></label>
+                        Makseviis
                         <select asp-for="PersonParticipant!.PaymentTypeId" class="form-control" asp-items="@Model.PaymentTypeSelectList"></select>
                         <span asp-validation-for="PersonParticipant!.PaymentTypeId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="PersonParticipant!.AdditionalInfo" class="control-label"></label>
+                        Lisainfo
                         <input asp-for="PersonParticipant!.AdditionalInfo" class="form-control"/>
                         <span asp-validation-for="PersonParticipant!.AdditionalInfo" class="text-danger"></span>
                     </div>

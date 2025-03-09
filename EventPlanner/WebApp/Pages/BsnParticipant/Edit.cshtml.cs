@@ -100,7 +100,7 @@ namespace WebApp.Pages_BsnParticipant
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
 
         private bool BusinessParticipantExists(int id)

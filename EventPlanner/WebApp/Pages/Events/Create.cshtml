@@ -2,46 +2,57 @@
 @model WebApp.Pages_Events.CreateModel
 
         @{
-        ViewData["Title"] = "Create";
+        ViewData["Title"] = "Loo Üritus";
         }
 
-<h1 xmlns="http://www.w3.org/1999/html">Create</h1>
-        
-    <h4>Event</h4>
-    <hr />
-    <div class="row">
-    <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Event.EventName" class="control-label"></label>
-                <input asp-for="Event.EventName" class="form-control" />
-                <span asp-validation-for="Event.EventName" class="text-danger"></span>
+<div class="container mt-2">
+    <div class="row bg-primary">
+        <div class="col-3 text-center text-white">
+            <h3>Üritus</h3>
+        </div>
+    </div>
+<div class="row bg-white text-black p-3">
+    <div class="col-3 position-relative">
+        <div>
+            <a class="position-absolute bottom-0 btn btn-secondary" role="button" asp-page="../Index">Tagasi Avalehele</a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="text-primary">
+            <h4></h4>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        Ürituse nimi
+                        <input asp-for="Event.EventName" class="form-control" data-val-required="Ürituse nimi on kohustuslik"/>
+                        <span asp-validation-for="Event.EventName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        Asukoht
+                        <input asp-for="Event.EventLocation" class="form-control" data-val-required="Asukoht on kohustuslik"/>
+                        <span asp-validation-for="Event.EventLocation" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        Toimumisaeg
+                        <input asp-for="Event.EventStartTime" class="form-control" data-val-required="Toimumisaeg on kohustuslik"/>
+                        <span asp-validation-for="Event.EventStartTime" class="text-danger"></span>
+                        <span class="text-danger">@Model.ErrorMessage</span>
+                    </div>
+                    <div class="form-group">
+                        Lisainfo
+                        <textarea asp-for="Event.AdditionalInfo" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group pt-1">
+                        <input type="submit" value="Lisa" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Event.EventLocation" class="control-label"></label>
-                <input asp-for="Event.EventLocation" class="form-control" />
-                <span asp-validation-for="Event.EventLocation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.EventStartTime" class="control-label"></label>
-                <input asp-for="Event.EventStartTime" class="form-control" />
-                <span asp-validation-for="Event.EventStartTime" class="text-danger"></span>
-                <span class="text-danger">@Model.ErrorMessage</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.AdditionalInfo" class="control-label"></label>
-                <textarea asp-for="Event.AdditionalInfo" class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-page="../Index">Tagasi Avalehele</a>
 </div>
 
 @section Scripts {

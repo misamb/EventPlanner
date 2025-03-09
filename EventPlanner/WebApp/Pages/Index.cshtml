@@ -26,15 +26,18 @@
     <div class="row text-black">
         <div class="col p-3 me-3 bg-white" >
             <table class="table">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Osalejaid</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
+                @if (Model.FutureEvents.Any())
+                {
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Osalejaid</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>   
+                }
                 <tbody>
                 @foreach (var item in Model.FutureEvents)
                 {
@@ -49,13 +52,9 @@
                             @IndexModel.GetParticipantCount(item)
                         </td>
                         <td>
-                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="btn btn-secondary btn-sm" role="button" asp-page="/PrsnParticipant/Create" asp-route-eventId="@item.Id">
                                 Lisa osaleja
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-page="/PrsnParticipant/Create" asp-route-eventId="@item.Id">Eraisik</a></li>
-                                <li><a class="dropdown-item" asp-page="/BsnParticipant/Create" asp-route-eventId="@item.Id">Ettevõte</a></li>
-                            </ul>
+                            </a>
 
                         </td>
                         <td>
@@ -67,16 +66,22 @@
                 }
                 </tbody>
             </table>
+            <div>
+                <a class="btn btn-secondary" role="button" asp-page="/Events/Create">Lisa Üritus</a>
+            </div>
         </div>
         <div class="col p-3 bg-white">
             <table class="table">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Osalejaid</th>
-                </tr>
-                </thead>
+                @if (Model.PastEvents.Any())
+                {
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Osalejaid</th>
+                    </tr>
+                    </thead>
+                }
                 <tbody>
                 @foreach (var item in Model.PastEvents)
                 {

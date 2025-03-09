@@ -49,7 +49,7 @@ namespace WebApp.Pages_Persons
 
             await _context.DeletePerson(id.Value);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }

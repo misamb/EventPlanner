@@ -1,8 +1,9 @@
 @page
+@using Microsoft.EntityFrameworkCore
 @model WebApp.Pages_Events.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Üritus";
 }
 <div class="container mt-2">
     <div class="row bg-primary">
@@ -46,6 +47,12 @@
                     @Html.DisplayFor(model => model.Event!.AdditionalInfo)
                 </dd>
             </dl>
+            @if (Helpers.IsInFuture(Model.Event!.EventStartTime))
+            {
+                <div>
+                    <a class="btn btn-secondary" role="button" asp-route-id="@Model.Event!.Id" asp-page="Edit">Muuda Üritust</a>
+                </div>
+            }
             <div class="row">
                 <div class="col">
                     <h5>Eraisikud</h5>

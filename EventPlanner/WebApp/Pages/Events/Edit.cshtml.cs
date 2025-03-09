@@ -71,7 +71,7 @@ namespace WebApp.Pages_Events
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
 
         
