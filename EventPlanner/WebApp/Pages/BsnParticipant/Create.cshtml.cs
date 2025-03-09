@@ -63,13 +63,10 @@ namespace WebApp.Pages_BsnParticipant
             
             if (!IsSavedBusiness)
             {
-                _context.Businesses.Add(Business);
-                await _context.SaveChangesAsync();
-                BusinessParticipant.BusinessId = Business.Id;
+                BusinessParticipant.BusinessId = await _context.CreateBusiness(Business);
             }
 
-            _context.BusinessParticipants.Add(BusinessParticipant);
-            await _context.SaveChangesAsync();
+            await _context.CreateBusinessParticipant(BusinessParticipant);
 
             return RedirectToPage("../Index");
         }

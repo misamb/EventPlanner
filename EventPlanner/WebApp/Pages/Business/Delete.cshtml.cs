@@ -20,7 +20,7 @@ namespace WebApp.Pages_Business
         }
 
         [BindProperty]
-        public Business Business { get; set; } = default!;
+        public Business? Business { get; set; } 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -43,18 +43,12 @@ namespace WebApp.Pages_Business
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
+            if (id == null || Business is null)
             {
                 return NotFound();
             }
 
-            var business = await _context.Businesses.FindAsync(id);
-            if (business != null)
-            {
-                Business = business;
-                _context.Businesses.Remove(Business);
-                await _context.SaveChangesAsync();
-            }
+            await _context.DeleteBusiness(id.Value);
 
             return RedirectToPage("./Index");
         }

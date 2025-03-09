@@ -20,7 +20,7 @@ namespace WebApp.Pages_PrsnParticipant
         }
 
         [BindProperty]
-        public PersonParticipant PersonParticipant { get; set; } = default!;
+        public PersonParticipant? PersonParticipant { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -42,18 +42,12 @@ namespace WebApp.Pages_PrsnParticipant
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
+            if (id == null || PersonParticipant is null)
             {
                 return NotFound();
             }
 
-            var personparticipant = await _context.PersonParticipants.FindAsync(id);
-            if (personparticipant != null)
-            {
-                PersonParticipant = personparticipant;
-                _context.PersonParticipants.Remove(PersonParticipant);
-                await _context.SaveChangesAsync();
-            }
+            await _context.DeletePersonParticipant(id.Value);
 
             return RedirectToPage("../Index");
         }

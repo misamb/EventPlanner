@@ -19,7 +19,7 @@ namespace WebApp.Pages_Persons
         }
 
         [BindProperty]
-        public Person Person { get; set; } = default!;
+        public Person? Person { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -42,18 +42,12 @@ namespace WebApp.Pages_Persons
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
+            if (id == null || Person is null)
             {
                 return NotFound();
             }
 
-            var person = await _context.Persons.FindAsync(id);
-            if (person != null)
-            {
-                Person = person;
-                _context.Persons.Remove(Person);
-                await _context.SaveChangesAsync();
-            }
+            await _context.DeletePerson(id.Value);
 
             return RedirectToPage("./Index");
         }

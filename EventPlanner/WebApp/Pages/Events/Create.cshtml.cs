@@ -42,8 +42,7 @@ namespace WebApp.Pages_Events
                 return Page();
             }
 
-            _context.Events.Add(Event);
-            await _context.SaveChangesAsync();
+            await _context.CreateEvent(Event);
 
             return RedirectToPage("../Index");
         }

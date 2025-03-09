@@ -19,7 +19,7 @@ namespace WebApp.Pages_Events
         }
 
         [BindProperty]
-        public Event Event { get; set; } = default!;
+        public Event? Event { get; set; } 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,7 +28,7 @@ namespace WebApp.Pages_Events
                 return NotFound();
             }
 
-            var e = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
+            var e = await _context.GetEventById(id.Value);
 
             if (e is not null)
             {
@@ -42,18 +42,12 @@ namespace WebApp.Pages_Events
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
+            if (id == null || Event is null)
             {
                 return NotFound();
             }
 
-            var e = await _context.Events.FindAsync(id);
-            if (e != null)
-            {
-                Event = e;
-                _context.Events.Remove(Event);
-                await _context.SaveChangesAsync();
-            }
+            await _context.DeleteEvent(id.Value);
 
             return RedirectToPage("./Index");
         }

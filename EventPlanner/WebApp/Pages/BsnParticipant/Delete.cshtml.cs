@@ -20,7 +20,7 @@ namespace WebApp.Pages_BsnParticipant
         }
 
         [BindProperty]
-        public BusinessParticipant BusinessParticipant { get; set; } = default!;
+        public BusinessParticipant? BusinessParticipant { get; set; } 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,7 +33,6 @@ namespace WebApp.Pages_BsnParticipant
 
             if (BusinessParticipant is not null)
             {
-                
                 return Page();
             }
 
@@ -42,18 +41,12 @@ namespace WebApp.Pages_BsnParticipant
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
+            if (id == null || BusinessParticipant is null)
             {
                 return NotFound();
             }
 
-            var businessparticipant = await _context.BusinessParticipants.FindAsync(id);
-            if (businessparticipant != null)
-            {
-                BusinessParticipant = businessparticipant;
-                _context.BusinessParticipants.Remove(BusinessParticipant);
-                await _context.SaveChangesAsync();
-            }
+            await _context.DeleteBusinessParticipant(id.Value);
 
             return RedirectToPage("./Index");
         }

@@ -27,29 +27,29 @@
                     Ürituse nimi:
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.BusinessParticipant.Business!.BusinessName)
+                    @Html.DisplayFor(model => model.BusinessParticipant!.Business!.BusinessName)
                 </dd>
                 <dt class="col-sm-2">
                     Ettevõtte nimi:
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.BusinessParticipant.Business!.BusinessName)
+                    @Html.DisplayFor(model => model.BusinessParticipant!.Business!.BusinessName)
                 </dd>
                 <dt class="col-sm-2">
                     Osalejate arv:
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.BusinessParticipant.ParticipantCount)
+                    @Html.DisplayFor(model => model.BusinessParticipant!.ParticipantCount)
                 </dd>
                 <dt class="col-sm-2">
                     Lisainfo:
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.BusinessParticipant.AdditionalInfo)
+                    @Html.DisplayFor(model => model.BusinessParticipant!.AdditionalInfo)
                 </dd>
             </dl>
             <form method="post">
-                <input type="hidden" asp-for="BusinessParticipant.Id"/>
+                <input type="hidden" asp-for="BusinessParticipant!.Id"/>
                 <input type="submit" value="Eemalda" class="btn btn-danger"/>
             </form>
         </div>

@@ -65,13 +65,10 @@ namespace WebApp.Pages_PrsnParticipant
 
             if (!IsSavedPerson)
             {
-                _context.Persons.Add(Person);
-                await _context.SaveChangesAsync();
-                PersonParticipant.PersonId = Person.Id;
+                PersonParticipant.PersonId = await _context.CreatePerson(Person);
             }
-            
-            _context.PersonParticipants.Add(PersonParticipant);
-            await _context.SaveChangesAsync();
+
+            await _context.CreatePersonParticipant(PersonParticipant);
 
             return RedirectToPage("../Index");
         }

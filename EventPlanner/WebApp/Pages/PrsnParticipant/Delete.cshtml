@@ -26,25 +26,25 @@
                     Ürituse nimi:
                 </dt>
                 <dt class="col-sm-10">
-                    @Html.DisplayFor(model => model.PersonParticipant.Event!.EventName)
+                    @Html.DisplayFor(model => model.PersonParticipant!.Event!.EventName)
                 </dt>
                 <dt class="col-sm-2">
                     Eraisiku nimi:
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.PersonParticipant.Person!.FirstName)
-                    @Html.DisplayFor(model => model.PersonParticipant.Person!.LastName)
+                    @Html.DisplayFor(model => model.PersonParticipant!.Person!.FirstName)
+                    @Html.DisplayFor(model => model.PersonParticipant!.Person!.LastName)
                 </dd>
                 <dt class="col-sm-2">
                     Lisainfo:
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.PersonParticipant.AdditionalInfo)
+                    @Html.DisplayFor(model => model.PersonParticipant!.AdditionalInfo)
                 </dd>
             </dl>
 
             <form method="post">
-                <input type="hidden" asp-for="PersonParticipant.Id"/>
+                <input type="hidden" asp-for="PersonParticipant!.Id"/>
                 <input type="submit" value="Eemalda" class="btn btn-danger"/>
             </form>
         </div>
