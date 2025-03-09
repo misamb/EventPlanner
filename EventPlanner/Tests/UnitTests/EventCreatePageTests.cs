@@ -112,20 +112,17 @@ public class EventCreatePageTests
         
         var testEvent = new Event()
         {
-            Id = 1,
+            Id = 99,
             EventName = "TestEvent",
             EventStartTime = DateTime.Now.AddMinutes(10),
             EventLocation = "TestLocation",
         };
         
-        await appDbContext.Events.AddAsync(testEvent);
-        await appDbContext.SaveChangesAsync();
-        
         var pageModel = new CreateModel(appDbContext);
         pageModel.Event = testEvent;
         
         //Act
-        var result = await pageModel.OnPostAsync();
+        await pageModel.OnPostAsync();
         
         //Assert
         var createdEvent = appDbContext.Events.Find(testEvent.Id);
