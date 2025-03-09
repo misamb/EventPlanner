@@ -28,7 +28,7 @@ namespace WebApp.Pages_Persons
                 return NotFound();
             }
 
-            var person = await _context.Persons.FirstOrDefaultAsync(m => m.Id == id);
+            var person = await _context.GetPersonById(id.Value);
 
             if (person is not null)
             {

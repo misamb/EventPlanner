@@ -1,4 +1,5 @@
 ﻿@page
+@using Microsoft.EntityFrameworkCore
 @model IndexModel
 @{
     ViewData["Title"] = "Avaleht";
@@ -27,9 +28,9 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Nimi</th>
-                    <th scope="col">Aeg</th>
-                    <th scope="col">Osaleja</th>
+                    <th></th>
+                    <th></th>
+                    <th>Osalejaid</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -45,7 +46,7 @@
                             @item.EventStartTime
                         </td>
                         <td>
-                            <a>Osalejad</a>
+                            @IndexModel.GetParticipantCount(item)
                         </td>
                         <td>
                             <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,18 +70,25 @@
         </div>
         <div class="col p-3 bg-white">
             <table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Osalejaid</th>
+                </tr>
+                </thead>
                 <tbody>
                 @foreach (var item in Model.PastEvents)
                 {
-                <tr>
-                    <td>
-                        <a asp-page="/Events/Details" asp-route-id="@item.Id">@item.EventName</a>
-                    </td>
-                    <td>@item.EventStartTime</td>
-                    <td>
-                        <a asp-page="/Events/Details" asp-route-id="@item.Id">Osalejad</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <a asp-page="/Events/Details" asp-route-id="@item.Id">@item.EventName</a>
+                        </td>
+                        <td>@item.EventStartTime</td>
+                        <td>
+                            @IndexModel.GetParticipantCount(item)
+                        </td>
+                    </tr>
                 }
                 </tbody>
             </table>

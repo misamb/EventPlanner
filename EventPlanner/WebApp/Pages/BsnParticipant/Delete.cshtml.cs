@@ -18,6 +18,10 @@ namespace WebApp.Pages_BsnParticipant
         {
             _context = context;
         }
+        
+        public Business? Business { get; set; }
+        
+        public Event? Event { get; set; }
 
         [BindProperty]
         public BusinessParticipant? BusinessParticipant { get; set; } 
@@ -31,12 +35,20 @@ namespace WebApp.Pages_BsnParticipant
 
             BusinessParticipant = await _context.GetBusinessParticipantWithBusinessAndEventById(id.Value);
 
-            if (BusinessParticipant is not null)
+            if (BusinessParticipant == null)
             {
-                return Page();
+                return NotFound();
+            }
+            
+            Event = BusinessParticipant.Event;
+            Business = BusinessParticipant.Business;
+
+            if (Business == null || Event == null)
+            {
+                return NotFound();
             }
 
-            return NotFound();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)

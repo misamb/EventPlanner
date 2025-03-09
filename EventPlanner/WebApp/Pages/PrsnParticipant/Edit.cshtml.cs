@@ -19,6 +19,8 @@ namespace WebApp.Pages_PrsnParticipant
         {
             _context = context;
         }
+        
+        public Event? Event { get; set; }
 
         [BindProperty]
         public PersonParticipant? PersonParticipant { get; set; }
@@ -35,16 +37,17 @@ namespace WebApp.Pages_PrsnParticipant
                 return NotFound();
             }
 
-            PersonParticipant =  await _context.PersonParticipants.FirstOrDefaultAsync(pp => pp.Id == personParticipantId);
+            PersonParticipant =  await _context.GetPersonParticipantWithPersonAndEventById(personParticipantId.Value);
             
             if (PersonParticipant == null)
             {
                 return NotFound();
             }
+
+            Person = PersonParticipant.Person;
+            Event = PersonParticipant.Event;
             
-            Person = await _context.Persons.FirstOrDefaultAsync(p => p.Id == PersonParticipant.PersonId);
-            
-            if (Person == null)
+            if (Person == null || Event == null)
             {
                 return NotFound();
             }

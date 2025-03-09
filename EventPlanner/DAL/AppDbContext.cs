@@ -190,5 +190,14 @@ public class AppDbContext : DbContext
         }
     }
 
+    public virtual async Task<List<Event>> GetAllEventsWithParticipants()
+    {
+        return await Events.Include(e => e.PersonParticipants)
+            .ThenInclude(pp => pp.Person) 
+            .Include(e => e.BusinessParticipants)
+            .ThenInclude(bp => bp.Business)
+            .ToListAsync();
+    }
+
     
 }

@@ -36,7 +36,7 @@ namespace WebApp.Pages_Events
                 return Page();
             }
 
-            if (!Validation.IsInFuture(Event.EventStartTime))
+            if (!Helpers.IsInFuture(Event.EventStartTime))
             {
                 ErrorMessage = "Algus aeg peab olema tulevikus!";
                 return Page();

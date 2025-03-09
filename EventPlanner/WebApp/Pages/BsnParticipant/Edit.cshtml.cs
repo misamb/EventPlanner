@@ -21,6 +21,8 @@ namespace WebApp.Pages_BsnParticipant
         }
         
         public SelectList PaymentTypeSelectList { get; set; } = default!;
+        
+        public Event? Event { get; set; }
 
         [BindProperty]
         public BusinessParticipant? BusinessParticipant { get; set; }
@@ -35,16 +37,18 @@ namespace WebApp.Pages_BsnParticipant
                 return NotFound();
             }
 
-            BusinessParticipant =  await _context.BusinessParticipants.FirstOrDefaultAsync(m => m.Id == businessParticipantId);
+            BusinessParticipant =  await _context.GetBusinessParticipantWithBusinessAndEventById(businessParticipantId.Value);
             
             if (BusinessParticipant == null)
             {
                 return NotFound();
             }
+
+            Business = BusinessParticipant.Business;
             
-            Business = _context.Businesses.FirstOrDefault(m => m.Id == BusinessParticipant.BusinessId);
+            Event = BusinessParticipant.Event;
             
-            if (Business == null)
+            if (Business == null || Event == null)
             {
                 return NotFound();
             }

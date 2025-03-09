@@ -18,6 +18,10 @@ namespace WebApp.Pages_PrsnParticipant
         {
             _context = context;
         }
+        
+        public Event? Event { get; set; }
+        
+        public Person? Person { get; set; }
 
         [BindProperty]
         public PersonParticipant? PersonParticipant { get; set; }
@@ -31,13 +35,22 @@ namespace WebApp.Pages_PrsnParticipant
 
             PersonParticipant = await _context.GetPersonParticipantWithPersonAndEventById(id.Value);
 
-            if (PersonParticipant is not null)
+            if (PersonParticipant == null)
             {
 
-                return Page();
+                return NotFound();
             }
+            
+            Person = PersonParticipant.Person;
+            Event = PersonParticipant.Event;
 
-            return NotFound();
+            if (Event == null || Person == null)
+            {
+                return NotFound();
+            }
+            
+            return Page();
+            
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)

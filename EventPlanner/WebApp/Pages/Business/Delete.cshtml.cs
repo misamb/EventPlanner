@@ -29,7 +29,7 @@ namespace WebApp.Pages_Business
                 return NotFound();
             }
 
-            var business = await _context.Businesses.FirstOrDefaultAsync(m => m.Id == id);
+            var business = await _context.GetBusinessById(id.Value);
 
             if (business is not null)
             {

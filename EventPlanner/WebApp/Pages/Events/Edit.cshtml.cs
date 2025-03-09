@@ -18,6 +18,8 @@ namespace WebApp.Pages_Events
         {
             _context = context;
         }
+        
+        public string? ErrorMessage { get; set; }
 
         [BindProperty]
         public Event Event { get; set; } = default!;
@@ -29,7 +31,7 @@ namespace WebApp.Pages_Events
                 return NotFound();
             }
 
-            var e =  await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
+            var e =  await _context.GetEventById(id.Value);
             if (e == null)
             {
                 return NotFound();
@@ -46,12 +48,16 @@ namespace WebApp.Pages_Events
             {
                 return Page();
             }
-
-            _context.Attach(Event).State = EntityState.Modified;
+            
+            if (!Helpers.IsInFuture(Event.EventStartTime))
+            {
+                ErrorMessage = "Algus aeg peab olema tulevikus!";
+                return Page();
+            }
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.EditEvent(Event);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -67,6 +73,8 @@ namespace WebApp.Pages_Events
 
             return RedirectToPage("./Index");
         }
+
+        
 
         private bool EventExists(int id)
         {

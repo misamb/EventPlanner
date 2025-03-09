@@ -20,11 +20,11 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        var events = await _context.Events.ToListAsync();
+        var events = await _context.GetAllEventsWithParticipants();
         
         foreach (var e in events)
         {
-            if (Validation.IsInFuture(e.EventStartTime))
+            if (Helpers.IsInFuture(e.EventStartTime))
             {
                 FutureEvents.Add(e);
             }
@@ -33,7 +33,25 @@ public class IndexModel : PageModel
                 PastEvents.Add(e);
             }
         }
-        
     }
+
+    public static int GetParticipantCount(Event e)
+    {
+        var result = 0;
+
+        if (e.BusinessParticipants != null)
+        {
+            result += e.BusinessParticipants.Sum(bp => bp.ParticipantCount);
+        }
+
+        if (e.PersonParticipants != null)
+        {
+            result += e.PersonParticipants.Sum(pp => pp.ParticipantCount);
+        }
+
+        return result;
+    }
+    
+    
     
 }

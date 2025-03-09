@@ -1,6 +1,6 @@
 ﻿namespace WebApp;
 
-public static class Validation
+public static class Helpers
 {
     public static bool IsInFuture(DateTime dateTime)
     {

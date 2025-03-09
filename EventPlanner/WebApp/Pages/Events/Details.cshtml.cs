@@ -19,7 +19,7 @@ namespace WebApp.Pages_Events
             _context = context;
         }
 
-        public Event Event { get; set; } = default!;
+        public Event? Event { get; set; }
         
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,16 +28,15 @@ namespace WebApp.Pages_Events
                 return NotFound();
             }
 
-            var e = await _context.GetEventWithAllParticipantsById(id.Value);
+            Event = await _context.GetEventWithAllParticipantsById(id.Value);
             
-            if (e is not null)
+            if (Event is null)
             {
-                Event = e;
 
-                return Page();
+                return NotFound();
             }
 
-            return NotFound();
+            return Page();
         }
     }
 }
