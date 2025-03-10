@@ -15,7 +15,7 @@ EventPlanner is a web app for managing events and their participants. You can cr
     .NET 9
     Tested on JetBrains Rider 2024 and Visual Studio Community 2022
 
-#To use
+#To use:
     
-    Clone this repository to your preferred and open it in your IDE.
+    Clone this repository to your preferred folder and open it in your IDE.
     Start the code from WebApp/Program.cs
